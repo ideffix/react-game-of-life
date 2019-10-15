@@ -24,14 +24,17 @@ const countNewCellState = (board, i, j) => {
 const getCellValue = (board, i, j) => {
     const rows = board.length;
     const cols = board[0].length;
-    if (
-        i < 0 ||
-        j < 0 ||
-        i >= rows ||
-        j >= cols
-    ) {
-        return 0;
-    } else {
-        return board[i][j];
+    if (i < 0) {
+        i = rows - 1;
     }
+    if (j < 0) {
+        j = cols - 1;
+    }
+    if (i >= rows) {
+        i = 0;
+    }
+    if (j >= cols) {
+        j = 0;
+    }
+    return board[i][j];
 }
