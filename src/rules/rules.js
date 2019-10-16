@@ -7,7 +7,7 @@ const countNewCellState = (board, i, j) => {
     let sum = 0;
     for (let k = -1; k < 2; k++) {
         for (let l = -1; l < 2; l++) {
-            if (i === j) {
+            if (k === 0 && l === 0) {
                 continue;
             } else {
                 sum += getCellValue(board, i + k, j + l)
