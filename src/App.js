@@ -3,24 +3,27 @@ import Board from "./components/Board";
 
 const App = () => {
     const [initialState, setInitialState] = useState([[]]);
+
+    const cellClickHandler = (i, j) => {
+        let copy = JSON.parse(JSON.stringify(initialState));
+        copy[i][j] = initialState[i][j] === 0 ? 1 : 0;
+        setInitialState(copy);
+    };
+
     useEffect(() => {
-        setInitialState(generateRandomState(30, 30));
+        setInitialState(generateZeroState(30, 30));
     }, []);
 
-    return <Board refreshTime={500} initialData={initialState} />;
+    return (
+        <Board
+            refreshTime={500}
+            initialData={initialState}
+            onCellClick={cellClickHandler}
+        />
+    );
 };
 
-function* binaryGenerator() {
-    while (true) {
-        yield Math.round(Math.random());
-    }
-}
-
-const generateRandomState = (width, height) => {
-    const it = binaryGenerator();
-    return Array(width)
-        .fill(Array(height).fill(0))
-        .map(i => i.map(j => it.next().value));
-};
+const generateZeroState = (width, height) =>
+    Array(width).fill(Array(height).fill(0));
 
 export default App;
