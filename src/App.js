@@ -3,6 +3,8 @@ import Board from "./components/Board";
 
 const App = () => {
     const [initialState, setInitialState] = useState([[]]);
+    const [refreshTime, setRefreshTime] = useState(100);
+    const [started, setStarted] = useState(false);
 
     const cellClickHandler = (i, j) => {
         let copy = JSON.parse(JSON.stringify(initialState));
@@ -11,15 +13,25 @@ const App = () => {
     };
 
     useEffect(() => {
-        setInitialState(generateZeroState(30, 30));
+        setInitialState(generateZeroState(30, 50));
     }, []);
 
     return (
-        <Board
-            refreshTime={500}
-            initialData={initialState}
-            onCellClick={cellClickHandler}
-        />
+        <>
+            <Board
+                refreshTime={refreshTime}
+                initialData={initialState}
+                onCellClick={cellClickHandler}
+                started={started}
+            />
+            <button onClick={() => setStarted(true)}>Start!</button>
+            Refresh time [ms]:
+            <input
+                type={"number"}
+                onChange={e => setRefreshTime(Number(e.target.value))}
+                value={refreshTime}
+            />
+        </>
     );
 };
 

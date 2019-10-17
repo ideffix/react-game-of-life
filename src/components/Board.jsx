@@ -4,8 +4,7 @@ import Cell from "./Cell";
 import { resolveNewBoardState } from "../rules/rules";
 import { useInterval } from "react-use";
 
-const Board = ({ initialData, refreshTime, onCellClick }) => {
-    const [started, setStarted] = useState(false);
+const Board = ({ initialData, refreshTime, onCellClick, started }) => {
     const [currentBoardState, setCurrentBoardState] = useState([[]]);
     useEffect(() => {
         setCurrentBoardState(initialData);
@@ -35,12 +34,12 @@ const Board = ({ initialData, refreshTime, onCellClick }) => {
                     ))}
                 </tbody>
             </table>
-            <button onClick={() => setStarted(true)}>Start!</button>
         </>
     );
 };
 
 Board.propTypes = {
+    started: PropTypes.bool,
     initialData: PropTypes.array.isRequired,
     refreshTime: PropTypes.number.isRequired,
     onCellClick: PropTypes.func
