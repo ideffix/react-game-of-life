@@ -1,40 +1,51 @@
 export const resolveNewBoardState = currentBoardState =>
-    currentBoardState.map((row, i) =>
-        row.map((cell, j) => countNewCellState(currentBoardState, i, j))
+    currentBoardState.map((slice, i) =>
+        slice.map((row, j) =>
+            row.map((cell, k) => countNewCellState(currentBoardState, i, j, k))
+        )
     );
 
-const countNewCellState = (board, i, j) => {
+const countNewCellState = (board, i, j, k) => {
     let sum = 0;
-    for (let k = -1; k < 2; k++) {
-        for (let l = -1; l < 2; l++) {
-            if (k === 0 && l === 0) {
-                continue;
-            } else {
-                sum += getCellValue(board, i + k, j + l)
+    for (let x = -1; x < 2; x++) {
+        for (let y = -1; y < 2; y++) {
+            for (let z = -1; z < 2; z++) {
+                if (x === 0 && y === 0 && z === 0) {
+                    continue;
+                } else {
+                    sum += getCellValue(board, i + x, j + y, k + z);
+                }
             }
         }
     }
-    if (board[i][j] === 0) {
-        return sum === 3 ? 1 : 0;
+    if (board[i][j][k] === 0) {
+        return (sum === 4 || sum === 5) ? 1 : 0;
     } else {
-        return (sum === 2 || sum === 3) ? 1 : 0;
+        return (sum === 4 || sum === 5 || sum === 6) ? 1 : 0;
     }
 };
 
-const getCellValue = (board, i, j) => {
-    const rows = board.length;
-    const cols = board[0].length;
+const getCellValue = (board, i, j, k) => {
+    const width = board.length;
+    const height = board[0].length;
+    const depth = board[0][0].length;
     if (i < 0) {
-        i = rows - 1;
+        i = width - 1;
     }
     if (j < 0) {
-        j = cols - 1;
+        j = height - 1;
     }
-    if (i >= rows) {
+    if (k < 0) {
+        k = depth - 1;
+    }
+    if (i >= width) {
         i = 0;
     }
-    if (j >= cols) {
+    if (j >= height) {
         j = 0;
     }
-    return board[i][j];
+    if (k >= depth) {
+        k = 0;
+    }
+    return board[i][j][k];
 }

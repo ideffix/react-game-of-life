@@ -21,19 +21,19 @@ const Board = ({ initialData, refreshTime, onCellClick, started }) => {
 
     return (
         <>
-            <table>
+            <div> {currentBoardState.map((slice, k) => (<><h3 style={{margin: '0.5rem'}}>Slice {k}</h3><table>
                 <tbody>
-                    {currentBoardState.map((row, i) => (
+                    {slice.map((row, i) => (
                         <tr>
                             {row.map((cell, j) => (
                                 <Cell
                                     isAlive={cell === 1}
-                                    onClick={() => onCellClick(i, j)}/>
+                                    onClick={() => onCellClick(i, j, k)}/>
                             ))}
                         </tr>
                     ))}
                 </tbody>
-            </table>
+            </table></></> ))}</div>
         </>
     );
 };

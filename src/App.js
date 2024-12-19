@@ -6,14 +6,14 @@ const App = () => {
     const [refreshTime, setRefreshTime] = useState(100);
     const [started, setStarted] = useState(false);
 
-    const cellClickHandler = (i, j) => {
+    const cellClickHandler = (i, j, k) => {
         let copy = JSON.parse(JSON.stringify(initialState));
-        copy[i][j] = initialState[i][j] === 0 ? 1 : 0;
+        copy[i][j][k] = initialState[i][j][k] === 0 ? 1 : 0;
         setInitialState(copy);
     };
 
     useEffect(() => {
-        setInitialState(generateZeroState(30, 50));
+        setInitialState(generateZeroState(30, 50, 30));
     }, []);
 
     return (
@@ -35,7 +35,7 @@ const App = () => {
     );
 };
 
-const generateZeroState = (width, height) =>
-    Array(width).fill(Array(height).fill(0));
+const generateZeroState = (width, height, depth) =>
+    Array(width).fill(0).map(() => Array(height).fill(0).map(() => Array(depth).fill(0)));
 
 export default App;
